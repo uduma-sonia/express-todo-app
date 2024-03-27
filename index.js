@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 // Retrieve and render tasks
-app.get("/tasks", async (req, res) => {
+app.get("/", async (req, res) => {
   const incompletedTasks = await Task.find({ completed: false });
   const completedTasks = await Task.find({ completed: true });
 
@@ -35,14 +35,14 @@ app.get("/tasks", async (req, res) => {
 app.post("/tasks", async (req, res) => {
   const newTask = new Task(req.body);
   await newTask.save();
-  res.redirect(`/tasks`);
+  res.redirect(`/`);
 });
 
 // Delete task
 app.delete("/tasks/:id", async (req, res) => {
   const { id } = req.params;
   await Task.findByIdAndDelete(id);
-  res.redirect("/tasks");
+  res.redirect("/");
 });
 
 // Toggle task status
@@ -61,7 +61,7 @@ app.put("/tasks/:id", async (req, res) => {
     }
   );
 
-  res.redirect(`/tasks`);
+  res.redirect(`/`);
 });
 
 app.listen(3000, () => {
