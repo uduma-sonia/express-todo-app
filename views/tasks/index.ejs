@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <title>Tasks</title>
+  </head>
+  <body>
+    <div class="app_container">
+      <div>
+        <h1>Task Manager</h1>
+      </div>
+
+      <div class="main_container">
+        <form action="/tasks" method="POST">
+          <div class="form_container">
+            <input
+              type="text"
+              class="task_input_field"
+              name="title"
+              placeholder="Add new task"
+            />
+            <button class="add_button">Add</button>
+          </div>
+        </form>
+
+        <div class="task_list_container">
+          <p class="list_title">Tasks to do (<%= incompletedTasks.length %>)</p>
+
+          <div>
+            <% if(incompletedTasks.length === 0){ %>
+            <p class="no_data">No available tasks</p>
+            <% }%>
+          </div>
+
+          <div>
+            <% for(let task of incompletedTasks) {%>
+            <div class="task_item">
+              <div>
+                <p><%= task.title %></p>
+              </div>
+
+              <div class="task_actions_container">
+                <form action="/tasks/<%=task._id%>?_method=PUT" method="POST">
+                  <button>
+                    <i class="material-icons">check</i>
+                  </button>
+                </form>
+
+                <form
+                  action="/tasks/<%=task._id%>?_method=DELETE"
+                  method="POST"
+                >
+                  <button>
+                    <i class="material-icons">delete</i>
+                  </button>
+                </form>
+              </div>
+            </div>
+            <% }%>
+          </div>
+        </div>
+
+        <div class="task_list_container">
+          <p class="list_title">Done(<%= completedTasks.length %> )</p>
+
+          <div>
+            <% if(completedTasks.length === 0){ %>
+            <p class="no_data">No completed task</p>
+            <% }%>
+          </div>
+
+          <div>
+            <% for(let task of completedTasks) {%>
+            <div class="task_item task_item_done">
+              <div>
+                <p><%= task.title %></p>
+              </div>
+
+              <div class="task_actions_container">
+                <form action="/tasks/<%=task._id%>?_method=PUT" method="POST">
+                  <button>
+                    <i class="material-icons">check</i>
+                  </button>
+                </form>
+
+                <form
+                  action="/tasks/<%=task._id%>?_method=DELETE"
+                  method="POST"
+                >
+                  <button>
+                    <i class="material-icons">delete</i>
+                  </button>
+                </form>
+              </div>
+            </div>
+            <% }%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
